@@ -1,15 +1,9 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const http = require('node:http');
+const urlMap = require('./urlMap.Dto.js');
 
 const PORT = 3000;
-
-const urlMap = {
-    '/': 'index.html',
-    '/about': 'about.html',
-    '/contact-me': 'contact-me.html',
-    '/404': '404.html',
-};
 
 const server = http.createServer((req, res) => {
     const filePath = urlMap[req.url] ? path.join(__dirname, urlMap[req.url]) : path.join(__dirname, '404.html');
