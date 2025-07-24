@@ -4,9 +4,15 @@ const http = require('node:http');
 
 const PORT = 3000;
 
+const urlMap = {
+    '/': 'index.html',
+    '/about': 'about.html',
+    '/contact-me': 'contact-me.html',
+    '/404': '404.html',
+};
+
 const server = http.createServer((req, res) => {
-    if (req.url === '/' || req.url === '/index.html') {
-        const filePath = path.join(__dirname, 'index.html');
+    const filePath = urlMap[req.url] ? path.join(__dirname, urlMap[req.url]) : path.join(__dirname, '404.html');
 
         fs.readFile(filePath, 'utf8', (err, data) => {
             if (err) {
@@ -15,14 +21,9 @@ const server = http.createServer((req, res) => {
             } else {
                 res.writeHead(200, { 'Content-Type': 'text/html' });
                 res.end(data);
-            };
+            }
         });
-    } else {
-        // this isn't going to be final. just putting it here for now.
-        writeHead(404);
-        res.end('404 - Page Not Found');
-    }
-});
+    });
 
 server.listen(PORT, () => {
     console.log(`Server is listening on port ${PORT}`);
