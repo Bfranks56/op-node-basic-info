@@ -17,6 +17,7 @@ app.get("/contact-me", (req, res) => {
 
 app.use((req, res, next) => {
     res.status(404).sendFile(path.join(__dirname, urlMap['/404']));
+});
 
 const PORT = process.env.PORT;
 
